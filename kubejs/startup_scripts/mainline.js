@@ -94,6 +94,7 @@ StartupEvents.registry('item', event => {
 
 StartupEvents.registry("block", event => {
     const coils = [
+        ["reinforced_time_neutronium", "40000", "64", "9"],// By me.
         ["caloechorite", "12600", "16", "8"],
         ["reinforced_space_neutronium", "14800", "32", "8"],
         ["cosmic_alloy", "21000", "64", "9"],
