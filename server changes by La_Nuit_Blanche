@@ -1,0 +1,1209 @@
+//changes in server_scripts
+//  adds in moreinfo
+ServerEvents.recipes(event => {
+    event.recipes.createoreexcavation.vein('{"text": "\u65e0\u5c3d"}', 'gtceu:raw_infinity').placement(128, 48, 34883410).id("kubejs:infinity")
+	.priority(2)
+	.veinSize(0.5, 4)
+	.biomeWhitelist('minecraft:is_end')
+event.recipes.createoreexcavation.drilling([Item.of('gtceu:raw_infinity').withChance(0.50), Item.of('gtceu:raw_infinity_catalyst').withChance(0.50)], 'kubejs:infinity', 2400).id("kubejs:infinity_vein")
+    .fluid('gtceu:dragonium 10')
+	.drill('createoreexcavation:netherite_drill')
+	.stress(1024)
+    event.remove({output:"createchromaticreturn:creative_flour"})
+    event.remove({output:"createchromaticreturn:multiplite_ingot"})
+    event.recipes.create.mixing('kubejs:yinyang_essence',['16x kubejs:shadow_essence', '16x kubejs:refined_essence']).superheated()
+    event.recipes.ars_nouveau.imbuement(
+        "kubejs:void_essence",
+        "minecraft:dragon_egg",
+        10000,
+        [
+            "minecraft:dragon_egg",
+            "kubejs:yinyang_essence",
+            "kubejs:nature_essence"
+        ]
+    )
+    event.recipes.create.mixing('kubejs:exsistence_essence',['16x ars_nouveau:abjuration_essence', '16x ars_nouveau:manipulation_essence', '16x ars_nouveau:conjuration_essence', '16x ars_nouveau:air_essence',  '16x ars_nouveau:earth_essence',  '16x ars_nouveau:fire_essence',  '16x ars_nouveau:water_essence']).superheated()
+    event.recipes.create.mixing('kubejs:null_essence',['kubejs:exsistence_essence', '16x kubejs:yinyang_essence']).superheated()
+    event.recipes.create.mixing(Fluid.of('kubejs:timespace',160),['1x kubejs:exsistence_essence', '1x kubejs:null_essence']).superheated()
+    event.recipes.create.mixing('kubejs:timespace_essence',[Fluid.of('kubejs:timespace',1000)])
+    event.recipes.create.mixing(Fluid.of('kubejs:timespace',1000),'kubejs:timespace_essence').superheated()
+    event.recipes.create.mixing(Fluid.of('kubejs:codes',1000),'kubejs:code_essence').superheated()
+    event.recipes.create.mixing(Fluid.of('kubejs:codes',1000),['kubejs:0_essence','kubejs:1_essence']).superheated()
+    event.recipes.create.mixing('kubejs:code_essence',Fluid.of('kubejs:codes',1000))
+    event.recipes.create.sequenced_assembly(
+        [
+            Item.of('kubejs:code_essence').withChance(0.1),
+            Item.of('kubejs:bug_essence').withChance(0.9)
+        ],
+        "create:precision_mechanism",
+        [
+            event.recipes.create.deploying("kubejs:code", ["kubejs:code", "kubejs:void_essence"]),
+            event.recipes.create.deploying("kubejs:code", ["kubejs:code", "kubejs:yinyang_essence"]),
+            event.recipes.create.filling("kubejs:code", ["kubejs:code", Fluid.of("kubejs:timespace", 1000)]),
+            event.recipes.create.pressing("kubejs:code","kubejs:code")
+        ]
+    ).transitionalItem("kubejs:code").loops(10)
+    event.recipes.create.sequenced_assembly(
+        [
+            Item.of('kubejs:code_essence').withChance(1)
+        ],
+        "kubejs:bug_essence",
+        [
+            event.recipes.create.deploying("kubejs:code", ["kubejs:code", "kubejs:0_essence"]),
+            event.recipes.create.deploying("kubejs:code", ["kubejs:code", "kubejs:1_essence"]),
+            event.recipes.create.pressing("kubejs:code","kubejs:code")
+        ]
+    ).transitionalItem("kubejs:code").loops(100)
+    //event.recipes.create.sandpaper_polishing([Item.of('kubejs:0_essence').withChance(0.5), Item.of('kubejs:1_essence').withChance(0.5)], ["kubejs:code_essence"])
+    //event.recipes.create.sandpaper_polishing([Item.of('kubejs:0_essence').withChance(0.5)], ["kubejs:code_essence"])
+    //event.recipes.create.sandpaper_polishing([Item.of('kubejs:1_essence').withChance(0.5)], ["kubejs:code_essence"])
+    event.recipes.create.deploying([Item.of('2x kubejs:0_essence').withChance(0.5), Item.of('2x kubejs:1_essence').withChance(0.5)], ['kubejs:code_essence','kubejs:yinyang_essence']).keepHeldItem()
+    event.recipes.create.deploying('kubejs:0_essence', ['kubejs:1_essence','kubejs:yinyang_essence']).keepHeldItem()
+    event.recipes.create.deploying('kubejs:1_essence', ['kubejs:0_essence','kubejs:yinyang_essence']).keepHeldItem()
+    event.recipes.create.filling("createchromaticreturn:creative_flour", ["createchromaticreturn:shadow_steel_powder", Fluid.of("kubejs:codes", 10)])
+    event.recipes.create.compacting("createchromaticreturn:multiplite_ingot","9x createchromaticreturn:creative_flour")
+    event.recipes.create.mechanical_crafting("create:creative_fluid_tank",[
+        "MMM",
+        "MTM",
+        "MMM"
+    ],{
+        M:"createchromaticreturn:multiplite_ingot",
+        T:"create:fluid_tank"
+    })
+    event.recipes.create.mechanical_crafting("create:creative_crate",[
+        "MMM",
+        "MSM",
+        "MMM"
+    ],{
+        M:"createchromaticreturn:multiplite_ingot",
+        S:"ars_nouveau:sourceberry_sack"
+    })
+    //event.recipes.smelting('1x charcoal','1x #logs')
+    //event.shapeless('9x minecraft:iron_nugget','1x minecraft:iron_ingot')
+    //event.shapeless('9x minecraft:gold_nugget','1x minecraft:gold_ingot')
+    event.recipes.gtceu.extractor('Tp_extract')
+        .itemInputs('1x kubejs:timespace_essence')
+        .itemOutputs('1x gtceu:Timespace_block')
+        .duration(900)
+        .EUt(131072)
+    event.recipes.gtceu.extractor('Ri_extract')
+        .itemInputs('1x kubejs:refined_essence')
+        .outputFluids(Fluid.of('gtceu:refinium', 9))
+        .duration(9)
+        .EUt(480)
+    event.recipes.gtceu.extractor('Sh_extract')
+        .itemInputs('1x kubejs:shadow_essence')
+        .outputFluids(Fluid.of('gtceu:shasium', 9))
+        .duration(9)
+        .EUt(480)
+    event.recipes.gtceu.extractor('Su_extract')
+        .itemInputs('1x minecraft:shulker_shell')
+        .outputFluids(Fluid.of('gtceu:shulkium', 320))
+        .duration(100)
+        .EUt(7680)
+    event.recipes.gtceu.centrifuge('Ns_centrifuge')
+        .inputFluids(Fluid.of('gtceu:liquid_nether_air', 1000))
+        .chancedOutput('1x gtceu:small_soulium_dust', 5000, 500)
+        .chancedOutput('1x gtceu:tiny_netherium_dust', 1000, 200)
+        .duration(70)
+        .EUt(120)
+    event.recipes.gtceu.macerator('Sk_extract0')
+        .itemInputs('1x minecraft:sculk')
+        .itemOutputs(['1x gtceu:sculkium_dust','1x gtceu:meat_dust'])
+        .duration(9)
+        .EUt(2)
+    event.recipes.gtceu.macerator('Sk_extract1')
+        .itemInputs('1x minecraft:sculk_vein')
+        .itemOutputs('1x gtceu:tiny_sculkium_dust')
+        .duration(1)
+        .EUt(2)
+    event.recipes.gtceu.macerator('Sk_extract2')
+        .itemInputs('1x minecraft:sculk_catalyst')
+        .itemOutputs(['1x gtceu:sculkium_dust','1x minecraft:bone_meal','1x gtceu:small_meat_dust'])
+        .duration(9)
+        .EUt(2)
+    event.recipes.gtceu.macerator('Sk_extract3')
+        .itemInputs('1x minecraft:sculk_shrieker')
+        .itemOutputs(['1x gtceu:small_sculkium_dust','4x minecraft:bone','1x gtceu:tiny_meat_dust'])
+        .chancedOutput('1x minecraft:bone_meal',1000,10)
+        .duration(9)
+        .EUt(2)
+    event.recipes.gtceu.macerator('Sk_extract4')
+        .itemInputs('1x minecraft:sculk_sensor')
+        .itemOutputs(['1x gtceu:small_sculkium_dust','1x gtceu:tiny_meat_dust'])
+        .duration(3)
+        .EUt(2)
+    event.recipes.gtceu.extractor('Nl_extract')
+        .itemInputs('6x gtceu:Timespace_nugget')
+        .chancedOutput('gtceu:voidium_block',10,100)
+        .duration(100)
+        .EUt(2097152)
+    event.recipes.gtceu.fusion_reactor('ambrosium')
+        .inputFluids([Fluid.of('gtceu:voidium',1000),Fluid.of('gtceu:xenon',1000)])
+        .outputFluids(Fluid.of('gtceu:ambrosium',10))
+        .duration(200)
+        .EUt(12000000)
+    event.recipes.gtceu.extractor('Wi_extract0')
+        .itemInputs('1x minecraft:wither_skeleton_skull')
+        .itemOutputs('1x minecraft:skeleton_skull')
+        .outputFluids(Fluid.of('gtceu:witherium', 128))
+        .duration(100)
+        .EUt(1)
+    event.recipes.gtceu.extractor('Wi_extract1')
+        .itemInputs('1x minecraft:wither_rose')
+        .itemOutputs('1x minecraft:poppy')
+        .outputFluids(Fluid.of('gtceu:witherium',16))
+        .duration(10)
+        .EUt(1)
+    event.recipes.gtceu.chemical_bath('shadow_steel_ingot')
+        .itemInputs('1x createchromaticreturn:shadow_steel')
+        .itemOutputs('1x gtceu:shadow_steel_ingot')
+        .inputFluids(Fluid.of('gtceu:shasium', 144))
+        .duration(90)
+        .EUt(120)
+    event.recipes.gtceu.chemical_bath('refined_radiance_ingot')
+        .itemInputs('1x createchromaticreturn:refined_radiance')
+        .itemOutputs('1x gtceu:refined_radiance_ingot')
+        .inputFluids(Fluid.of('gtceu:refinium', 144))
+        .duration(90)
+        .EUt(120)
+    event.recipes.gtceu.mixer('totem_of_undying0')
+        .itemInputs(['1x gtceu:soularium_plate','2x gtceu:yinyang_star_alloy_dust'])
+        .notConsumable('1x kubejs:nature_essence')
+        .inputFluids([Fluid.of('gtceu:witherium',1000),Fluid.of('gtceu:sculkium',1000)])
+        .itemOutputs('1x minecraft:totem_of_undying')
+        .duration(1800)
+        .EUt(648)
+    event.recipes.gtceu.mixer('totem_of_undying1')
+        .circuit(0)
+        .itemInputs(['1x gtceu:soularium_plate','1x gtceu:ambrosium_ingot'])
+        .notConsumable('1x kubejs:nature_essence')
+        .notConsumable('2x gtceu:yinyang_star_alloy_ingot')
+        .inputFluids([Fluid.of('gtceu:witherium',1000),Fluid.of('gtceu:sculkium',1000)])
+        .itemOutputs('1x minecraft:totem_of_undying')
+        .duration(1800)
+        .EUt(6480)
+    event.recipes.gtceu.chemical_bath('nether_star')
+        .notConsumable('1x gtceu:refined_radiance_block')
+        .chancedOutput('1x gtceu:tiny_nether_star_dust',7000,100)
+        .chancedOutput('1x gtceu:dark_ash_dust',7000,-700)
+        .inputFluids(Fluid.of('gtceu:netherium', 1000))
+        .duration(90)
+        .EUt(120)
+    event.recipes.gtceu.fission_reactor('Tp_Nl')
+        .itemInputs('1x gtceu:Timespace_ingot')
+        .notConsumable('1x kubejs:yinyang_essence')
+        .itemOutputs('1x gtceu:voidium_ingot')
+        .duration(1800)
+        .EUt(10000)
+    event.recipes.gtceu.assembly_line('fission_reactor')
+      .itemInputs('16x gtceu:fusion_coil', '64x gtceu:superconductive_yinyang_frame', '8x gtceu:fusion_glass', '1x gtceu:zpm_field_generator', '1x #gtceu:circuits/zpm')
+      .itemOutputs('1x gtceu:fission_reactor')
+      .inputFluids(Fluid.of('gtceu:naquadria', 576), Fluid.of('gtceu:neutronium', 288))
+      .duration(286)
+      .EUt(491520)
+    event.recipes.gtceu.fission_reactor('Tp_TtSp')
+        .itemInputs('1x gtceu:Timespace_ingot')
+        .inputFluids(Fluid.of('gtceu:ambrosium',10))
+        .notConsumable('1x gtceu:infinity_catalyst_dust')
+        .itemOutputs('1x gtceu:time_space_dust')
+        .duration(1800)
+        .EUt(10000)
+    event.recipes.gtceu.fission_reactor('If')
+        .itemInputs('1x gtceu:infinity_ingot')
+        .notConsumable('1x gtceu:infinity_catalyst_dust')
+        .itemOutputs('1x gtceu:infinity_catalyst_dust')
+        .duration(1800)
+        .EUt(490000)
+    event.recipes.gtceu.centrifuge('TtSp')
+        .inputFluids(Fluid.of('gtceu:time_space',144))
+        .outputFluids(Fluid.of('gtceu:time',144))
+        .outputFluids(Fluid.of('gtceu:space',144))
+        .duration(18000)
+        .EUt(520000)
+    event.recipes.gtceu.mixer('TtSp')
+        .itemInputs('1x gtceu:time_dust')
+        .itemInputs('1x gtceu:space_dust')
+        .itemOutputs('1x gtceu:time_space_dust')
+        .duration(18000)
+        .EUt(520000)
+    event.recipes.gtceu.mixer('NtSp')
+        .itemInputs('1x gtceu:neutronium_dust')
+        .itemInputs('1x gtceu:space_dust')
+        .itemOutputs('1x gtceu:space_neutronium_dust')
+        .duration(1000)
+        .EUt(120000)
+    event.recipes.gtceu.centrifuge('NtSp')
+        .itemOutputs('1x gtceu:neutronium_dust')
+        .itemOutputs('1x gtceu:space_dust')
+        .itemInputs('1x gtceu:space_neutronium_dust')
+        .duration(1000)
+        .EUt(120000)
+    event.recipes.gtceu.mixer('NtTt')
+        .itemInputs('1x gtceu:neutronium_dust')
+        .itemInputs('1x gtceu:time_dust')
+        .itemOutputs('1x gtceu:time_neutronium_dust')
+        .duration(1000)
+        .EUt(240000)
+    event.recipes.gtceu.source_reactor('echorite')
+        .inputFluids(Fluid.of('gtceu:shulkium', 576))
+        .inputFluids(Fluid.of('gtceu:sculkium', 576))
+        .outputFluids(Fluid.of('gtceu:echorite', 144))
+        .duration(110)
+        .EUt(30720)
+    event.recipes.gtceu.assembler('sculk_catalyst')
+        .itemInputs('1x minecraft:bone_block')
+        .itemOutputs('1x minecraft:sculk_catalyst')
+        .inputFluids(Fluid.of('gtceu:sculkium', 288))
+        .duration(322)
+        .EUt(122880)
+        .circuit(6)
+    const coils = [
+        ["reinforced_space_neutronium","space_neutronium"],
+        ["reinforced_time_neutronium","time_neutronium"],
+        ["infinity","infinity"]
+    ]
+    coils.forEach(c => {
+        event.recipes.gtceu.assembler(c[0]+'_coil')
+            .itemInputs(['8x gtceu:reinforced_yinyang_double_wire','16x gtceu:superconductive_yinyang_foil'])
+            .itemOutputs('1x kubejs:'+c[0]+'_coil_block')
+            .inputFluids(Fluid.of('gtceu:'+c[1], 3000))
+            .duration(322)
+            .EUt(491520)
+        })
+    const plates = [
+    ['space_neutronium',524289],
+    ['time_neutronium',2097153],
+    ['time_space',8388609],
+    ['Timespace',33554433],
+    ['voidium',134217729]
+    ]
+    plates.forEach(a => {
+        event.remove({output:'gtceu:'+a[0]+'_plate'})
+        event.recipes.gtceu.cutter(a[0]+'_plate_oil')
+            .itemInputs('1x gtceu:'+a[0]+'_block')
+            .itemOutputs('9x gtceu:'+a[0]+'_plate')
+            .inputFluids(Fluid.of('gtceu:lubricant',1))
+            .duration(1)
+            .EUt(a[1])
+        event.recipes.gtceu.cutter(a[0]+'_plate_wet')
+            .itemInputs('1x gtceu:'+a[0]+'_block')
+            .itemOutputs('9x gtceu:'+a[0]+'_plate')
+            .inputFluids(Fluid.of('minecraft:water',4))
+            .duration(0)
+            .EUt(a[1])
+        event.recipes.gtceu.cutter(a[0]+'_plate_clean')
+            .itemInputs('1x gtceu:'+a[0]+'_block')
+            .itemOutputs('9x gtceu:'+a[0]+'_plate')
+            .inputFluids(Fluid.of('gtceu:distilled_water',3))
+            .duration(0)
+            .EUt(a[1])
+    })
+})
+ServerEvents.tags("item",event=>{
+    event.add("minecraft:beacon_payment_items",['kubejs:yinyang_essence'])
+})
+//  adds in machine
+ServerEvents.tags('item', event => {
+    event.add('gtceu:circuits/uev','kubejs:star_of_uev')
+    event.add('gtceu:circuits/uiv','kubejs:eye_of_uiv')
+    event.add('gtceu:circuits/uxv','kubejs:star_of_uxv')
+    event.add('gtceu:circuits/opv','kubejs:star_of_opv')
+    event.add('gtceu:circuits/max','kubejs:code_of_max')
+})
+ServerEvents.recipes(event => {
+    event.shaped(
+    'kubejs:star_of_uev',
+    ['AAA','ABA','AAA'],
+    {
+        'A':'minecraft:nether_star',
+        'B':'#gtceu:circuits/uhv'
+    }
+    ).id('gtceu:shaped/star_of_uev')
+    event.shaped(
+    'kubejs:eye_of_uiv',
+    ['AAA','ABA','AAA'],
+    {
+        'A':'gtceu:quantum_eye',
+        'B':'#gtceu:circuits/uev'
+    }
+    ).id('gtceu:shaped/eye_of_uiv')
+    event.shaped(
+    'kubejs:star_of_uxv',
+    ['AAA','ABA','AAA'],
+    {
+        'A':'gtceu:quantum_star',
+        'B':'#gtceu:circuits/uiv'
+    }
+    ).id('gtceu:shaped/star_of_uxv')
+    event.shaped(
+    'kubejs:star_of_opv',
+    ['AAA','ABA','AAA'],
+    {
+        'A':'gtceu:gravi_star',
+        'B':'#gtceu:circuits/uxv'
+    }
+    ).id('gtceu:shaped/star_of_opv')
+    event.shaped(
+    'kubejs:code_of_max',
+    ['ACA','CBC','ACA'],
+    {
+        'A':'kubejs:0_essence',
+        'B':'#gtceu:circuits/opv',
+        'C':'kubejs:1_essence'
+    }
+    ).id('gtceu:shaped/code_of_max')
+    let mtr = [
+    ['ulv','red_alloy','wood','wrought_iron','lead',''],//U,cable,plate_outside,plate_inside,wire+spring,buzz_saw_blade
+    ['lv','tin','wrought_iron','steel','copper','cobalt_brass'],
+    ['mv','copper','wrought_iron','aluminium','cupronickel','vanadium_steel'],
+    ['hv','gold','polyethylene','stainless_steel','kanthal','blue_steel'],
+    ['ev','aluminium','polyethylene','titanium','nichrome','ultimet'],
+    ['iv','platinum','polytetrafluoroethylene','tungsten_steel','tungsten_steel','tungsten_carbide'],
+    ['luv','niobium_titanium','polytetrafluoroethylene','rhodium_plated_palladium','hssg','hsse'],
+    ['zpm','vanadium_gallium','polybenzimidazole','naquadah_alloy','naquadah','naquadah_alloy'],
+    ['uv','yttrium_barium_cuprate','polybenzimidazole','darmstadtium','naquadah_alloy','duranium'],
+    ['uhv','europium','polybenzimidazole','neutronium','(blaze_rod as spring)','duranium'],
+    ['uev','netherium','polybenzimidazole','space_neutronium','netherium','duranium'],
+    ['uiv','shulkium','polybenzimidazole','time_neutronium','shulkium','duranium'],
+    ['uxv','sculkium','polybenzimidazole','time_space','sculkium','duranium'],
+    ['opv','end_steel','polybenzimidazole','Timespace','soularium','duranium'],
+    ['max','reinforced_yinyang','polybenzimidazole','voidium','reinforced_yinyang','duranium']
+    ]
+
+    let etv = [
+    ['uev','space_neutronium','netherium','netherium'],
+    ['uiv','time_neutronium','shulkium','shulkium'],
+    ['uxv','time_space','sculkium','sculkium'],
+    ['opv','Timespace','soularium','end_steel'],
+    ['max','voidium','reinforced_yinyang','reinforced_yinyang']
+    ]
+    etv.forEach(a => {
+        event.shaped(
+        'gtceu:'+a[0]+'_machine_casing',
+        ['PPP','PAP','PPP'],
+        {
+            'P':'gtceu:'+a[1]+'_plate',
+            'A':'#forge:tools/wrenches'
+        }
+        ).id('gtceu:shaped/'+a[0]+'_machine_casing')
+        event.shaped(
+        'gtceu:'+a[0]+'_machine_hull',
+        ['   ','BPB','XAX'],
+        {
+            'P':'gtceu:'+a[1]+'_plate',
+            'B':'gtceu:polybenzimidazole_plate',
+            'A':'gtceu:'+a[0]+'_machine_casing',
+            'X':'gtceu:'+a[2]+'_single_wire'
+        }
+        ).id('gtceu:shaped/'+a[0]+'_machine_hull')
+        event.shaped(
+        'gtceu:'+a[0]+'_input_hatch_9x',
+        [' P ',' A ','   '],
+        {
+            'A':'gtceu:'+a[0]+'_input_hatch',
+            'P':'gtceu:time_neutronium_nonuple_fluid_pipe'
+        }
+        ).id('gtceu:shaped/'+a[0]+'_input_hatch_9x')
+        event.shaped(
+        'gtceu:'+a[0]+'_output_hatch_9x',
+        [' P ',' A ','   '],
+        {
+            'P':'gtceu:'+a[0]+'_output_hatch',
+            'A':'gtceu:time_neutronium_nonuple_fluid_pipe'
+        }
+        ).id('gtceu:shaped/'+a[0]+'_output_hatch_9x')
+        event.shaped(
+        'gtceu:'+a[0]+'_input_hatch_4x',
+        [' P ',' A ','   '],
+        {
+            'A':'gtceu:'+a[0]+'_input_hatch',
+            'P':'gtceu:time_neutronium_quadruple_fluid_pipe'
+        }
+        ).id('gtceu:shaped/'+a[0]+'_input_hatch_4x')
+        event.shaped(
+        'gtceu:'+a[0]+'_output_hatch_4x',
+        [' P ',' A ','   '],
+        {
+            'P':'gtceu:'+a[0]+'_output_hatch',
+            'A':'gtceu:time_neutronium_quadruple_fluid_pipe'
+        }
+        ).id('gtceu:shaped/'+a[0]+'_output_hatch_4x')
+        event.recipes.gtceu.assembly_line(a[0]+'_energy_input_hatch')
+            .itemInputs('1x #gtceu:circuits/'+a[0],'1x gtceu:'+a[0]+'_machine_hull','2x gtceu:uhpic_chip','2x gtceu:'+a[2]+'_double_wire','4x gtceu:'+a[3]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",4000),Fluid.of("gtceu:time",500))
+            .itemOutputs('1x gtceu:'+a[0]+'_energy_input_hatch')
+            .duration(10)
+            .EUt(2166080)
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+a[0]+'_energy_input_hatch')).EUt(501520).CWUt(128))
+        event.recipes.gtceu.assembler(a[0]+'_energy_input_hatch_4a')
+            .itemInputs('2x gtceu:'+a[1]+'_plate','1x gtceu:'+a[0]+'_energy_input_hatch','2x gtceu:'+a[2]+'_quadruple_wire')
+            .inputFluids(Fluid.of("gtceu:time",50))
+            .itemOutputs('1x gtceu:'+a[0]+'_energy_input_hatch_4a')
+            .duration(10)
+            .EUt(2166080)
+        event.recipes.gtceu.assembly_line(a[0]+'_energy_output_hatch')
+            .itemInputs('1x #gtceu:circuits/'+a[0],'1x gtceu:'+a[0]+'_machine_hull','2x gtceu:uhpic_chip','2x gtceu:'+a[2]+'_double_wire','4x gtceu:managold_spring')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",4000),Fluid.of("gtceu:time",500))
+            .itemOutputs('1x gtceu:'+a[0]+'_energy_output_hatch')
+            .duration(10)
+            .EUt(2166080)
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+a[0]+'_energy_output_hatch')).EUt(501520).CWUt(128))
+        event.recipes.gtceu.assembler(a[0]+'_energy_output_hatch_4a')
+            .itemInputs('2x gtceu:'+a[1]+'_plate','1x gtceu:'+a[0]+'_energy_input_hatch','2x gtceu:'+a[2]+'_quadruple_wire')
+            .inputFluids(Fluid.of("gtceu:time",50))
+            .itemOutputs('1x gtceu:'+a[0]+'_energy_output_hatch_4a')
+            .duration(10)
+            .EUt(2166080)
+    })
+    let eav = [
+    ['uhv','neutronium','europium','europium'],
+    ['uev','space_neutronium','netherium','netherium'],
+    ['uiv','time_neutronium','shulkium','shulkium'],
+    ['uxv','time_space','sculkium','sculkium'],
+    ['opv','Timespace','soularium','end_steel'],
+    ['max','voidium','reinforced_yinyang','reinforced_yinyang']
+    ]
+    eav.forEach(b => {
+        let nnm = [
+        ['4x','quadruple'],
+        ['8x','octal'],
+        ['16x','hex']
+        ]
+        nnm.forEach(c => {
+            event.shaped(
+            'gtceu:'+b[0]+'_battery_buffer_'+c[0],
+            ['   ','XBX','XAX'],
+            {
+                'X':'gtceu:'+b[2]+'_'+c[1]+'_wire',
+                'B':'minecraft:chest',
+                'A':'gtceu:'+b[0]+'_machine_hull'
+            }
+            ).id('gtceu:shaped/'+b[0]+'_battery_buffer_'+c[0])
+        })
+        event.shaped(
+        'gtceu:'+b[0]+'_charger_4x',
+        ['XBX','XAX','YCY'],
+        {
+            'X':'gtceu:'+b[2]+'_quadruple_wire',
+            'B':'minecraft:chest',
+            'A':'gtceu:'+b[0]+'_machine_hull',
+            'Y':'gtceu:'+b[3]+'_single_cable',
+            'C':'#gtceu:circuits/'+b[0]
+        }
+        ).id('gtceu:shaped/'+b[0]+'_charger_4x')
+        event.recipes.gtceu.assembler(b[0]+'_energy_input_hatch_16a')
+            .itemInputs('4x gtceu:'+b[1]+'_plate','1x gtceu:'+b[0]+'_energy_input_hatch_4a','2x gtceu:'+b[2]+'_octal_wire','1x minecraft:totem_of_undying')
+            .inputFluids(Fluid.of("gtceu:time",50))
+            .itemOutputs('1x gtceu:'+b[0]+'_energy_input_hatch_16a')
+            .duration(10)
+            .EUt(2166080)
+        event.recipes.gtceu.assembler(b[0]+'_energy_input_hatch_64a')
+            .itemInputs('6x gtceu:'+b[1]+'_plate','1x gtceu:'+b[0]+'_energy_input_hatch_16a','2x gtceu:'+b[2]+'_hex_wire','1x minecraft:totem_of_undying')
+            .inputFluids(Fluid.of("gtceu:time_neutronium",50))
+            .itemOutputs('1x gtceu:'+b[0]+'_substation_input_hatch_64a')
+            .duration(10)
+            .EUt(2166080)
+        event.recipes.gtceu.assembler(b[0]+'_energy_output_hatch_16a')
+            .itemInputs('4x gtceu:'+b[1]+'_plate','1x gtceu:'+b[0]+'_energy_output_hatch_4a','2x gtceu:'+b[2]+'_octal_wire','1x minecraft:totem_of_undying','2x gtceu:echorite_spring')
+            .inputFluids(Fluid.of("gtceu:time",50))
+            .itemOutputs('1x gtceu:'+b[0]+'_energy_output_hatch_16a')
+            .duration(10)
+            .EUt(2166080)
+        event.recipes.gtceu.assembler(b[0]+'_energy_output_hatch_64a')
+            .itemInputs('6x gtceu:'+b[1]+'_plate','1x gtceu:'+b[0]+'_energy_output_hatch_16a','2x gtceu:'+b[2]+'_hex_wire','1x minecraft:totem_of_undying')
+            .inputFluids(Fluid.of("gtceu:time_neutronium",50))
+            .itemOutputs('1x gtceu:'+b[0]+'_substation_output_hatch_64a')
+            .duration(10)
+            .EUt(2166080)
+    })
+    event.remove({output:'gtceu:ev_energy_output_hatch_16a'})
+    event.remove({output:'gtceu:iv_energy_output_hatch_16a'})
+    event.remove({output:'gtceu:luv_energy_output_hatch_16a'})
+    event.remove({output:'gtceu:zpm_energy_output_hatch_16a'})
+    let vva = ['ulv','lv','mv','hv','ev','iv','luv','zpm','uv','uhv','uev','uiv','uxv','opv','max']
+    vva.forEach(d => {
+        let nmm = ['1','4','8','16']
+        nmm.forEach(e => {
+            event.recipes.gtceu.assembler(d+'_'+e+'a_energy_converter')
+                .itemInputs([e+'x #gtceu:circuits/'+d,'1x gtceu:'+d+'_machine_hull'])
+                .itemOutputs('1x gtceu:'+d+'_'+e+'a_energy_converter')
+                .duration(10)
+                .EUt(100)
+                .circuit(6)
+        })
+    })
+    let viv = [
+    ['ev','aluminium','titanium',1920],
+    ['iv','tungsten','tungsten_steel',7680],
+    ['luv','niobium_titanium','rhodium_plated_palladium',30720],
+    ['zpm','vanadium_gallium','naquadah_alloy',122880],
+    ['uv','yttrium_barium_cuprate','darmstadtium',491520]
+    ]
+    viv.forEach(e => {
+        event.recipes.gtceu.assembler(e[0]+'_energy_output_hatch_16a')
+            .itemInputs('1x gtceu:'+e[0]+'_transformer_1a','1x gtceu:'+e[0]+'_energy_output_hatch_4a','2x gtceu:'+e[1]+'_octal_wire','4x gtceu:'+e[2]+'_plate')
+            .itemOutputs('1x gtceu:'+e[0]+'_energy_output_hatch_16a')
+            .duration(200)
+            .EUt(e[3])
+    })
+    let vvv = [
+    ['uhv','echorite','polybenzimidazole','neutronium','europium',1966080,'uv',2,491520,'zpm',4],
+    ['uev','netherium','polybenzimidazole','space_neutronium','netherium',7864320,'uhv',3,1966080,'uv',16],
+    ['uiv','shulkium','polybenzimidazole','time_neutronium','shulkium',31457280,'uev',4,7864320,'uhv',64],
+    ['uxv','sculkium','polybenzimidazole','time_space','sculkium',125829120,'uiv',5,31457280,'uev',256],
+    ['opv','soularium','polybenzimidazole','Timespace','end_steel',503316480,'uxv',6,125829120,'uiv',1024]
+    ]
+    event.remove({output:'uhv_extractor'})
+    event.remove({output:'uhv_fermenter'})
+    event.remove({output:'uhv_fluid_solidifier'})
+    event.remove({output:'uhv_rock_crusher'})
+    vvv.forEach(f => {
+        event.shaped(
+        'gtceu:'+f[0]+'_electric_furnace',
+        ['XBX','BAB','YBY'],
+        {
+            'Y':'gtceu:'+f[4]+'_single_cable',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'B':'gtceu:'+f[1]+'_double_wire',
+            'X':'#gtceu:circuits/'+f[0]
+        }
+        ).id('gtceu:shaped/'+f[0]+'_electric_furnace')
+        event.shaped(
+        'gtceu:'+f[0]+'_alloy_smelter',
+        ['XBX','BAB','YBY'],
+        {
+            'Y':'gtceu:'+f[4]+'_single_cable',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'B':'gtceu:'+f[1]+'_quadruple_wire',
+            'X':'#gtceu:circuits/'+f[0]
+        }
+        ).id('gtceu:shaped/'+f[0]+'_alloy_smelter')
+        event.shaped(
+        'gtceu:'+f[0]+'_circuit_assembler',
+        ['YBC','XAX','ZBZ'],
+        {
+            'Y':'gtceu:'+f[0]+'_robot_arm',
+            'Z':'gtceu:'+f[4]+'_single_cable',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'gtceu:'+f[0]+'_conveyor_module',
+            'B':'#gtceu:circuits/'+f[0],
+            'C':'gtceu:'+f[0]+'_emitter'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_circuit_assembler')
+        event.shaped(
+        'gtceu:'+f[0]+'_thermal_centrifuge',
+        ['ZBZ','XAX','CBC'],
+        {
+            'B':'gtceu:'+f[0]+'_electric_motor',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'C':'gtceu:'+f[4]+'_single_cable',
+            'Z':'#gtceu:circuits/'+f[0],
+            'X':'gtceu:'+f[1]+'_quadruple_wire'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_thermal_centrifuge')
+        event.shaped(
+        'gtceu:'+f[0]+'_chemical_reactor',
+        ['XBX','CYC','ZAZ'],
+        {
+            'X':'gtceu:time_neutronium_huge_fluid_pipe',
+            'Y':'gtceu:'+f[0]+'_electric_motor',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'C':'gtceu:'+f[4]+'_single_cable',
+            'Z':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:echorite_rotor'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_chemical_reactor')
+        event.shaped(
+        'gtceu:'+f[0]+'_electrolyzer',
+        ['XBX','XAX','ZYZ'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'gtceu:'+f[1]+'_single_wire',
+            'Y':'gtceu:'+f[4]+'_single_cable',
+            'Z':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:fusion_glass'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_electrolyzer')
+        event.shaped(
+        'gtceu:'+f[0]+'_electromagnetic_separator',
+        ['CBX','BAY','ZBX'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'gtceu:'+f[1]+'_hex_wire',
+            'Z':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:'+f[4]+'_single_cable',
+            'C':'gtceu:'+f[0]+'_conveyor_module',
+            'Y':'gtceu:yinyang_rod'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_electromagnetic_separator')
+        event.shaped(
+        'gtceu:'+f[0]+'_extractor',
+        ['CZC','XAY','BZB'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'gtceu:'+f[0]+'_electric_piston',
+            'Z':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:'+f[4]+'_single_cable',
+            'C':'gtceu:fusion_glass',
+            'Y':'gtceu:'+f[0]+'_electric_pump'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_extractor')
+        event.shaped(
+        'gtceu:'+f[0]+'_extruder',
+        ['BBX','YAC','BBX'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:'+f[1]+'_quadruple_wire',
+            'C':'gtceu:time_neutronium_normal_fluid_pipe',
+            'Y':'gtceu:'+f[0]+'_electric_piston'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_extruder')
+        event.shaped(
+        'gtceu:'+f[0]+'_fermenter',
+        ['BYB','CAC','BXB'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:'+f[4]+'_single_cable',
+            'C':'gtceu:fusion_glass',
+            'Y':'gtceu:'+f[0]+'_electric_pump'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_fermenter')
+        event.shaped(
+        'gtceu:'+f[0]+'_fluid_heater',
+        ['BYB','CAC','ZXZ'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:'+f[1]+'_quadruple_wire',
+            'Y':'gtceu:fusion_glass',
+            'C':'gtceu:'+f[0]+'_electric_pump',
+            'Z':'gtceu:'+f[4]+'_single_cable'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_fluid_heater')
+        event.shaped(
+        'gtceu:'+f[0]+'_fluid_solidifier',
+        ['BYB','CAC','ZXZ'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'Z':'#gtceu:circuits/'+f[0],
+            'C':'gtceu:'+f[4]+'_single_cable',
+            'Y':'gtceu:fusion_glass',
+            'B':'gtceu:'+f[0]+'_electric_pump',
+            'X':'#forge:chests/wooden'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_fluid_solidifier')
+        event.shaped(
+        'gtceu:'+f[0]+'_mixer',
+        ['XBX','XYX','ZAZ'],
+        {
+            'X':'gtceu:fusion_glass',
+            'Y':'gtceu:'+f[0]+'_electric_motor',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'Z':'#gtceu:circuits/'+f[0],
+            'B':'gtceu:echorite_rotor'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_mixer')
+        event.shaped(
+        'gtceu:'+f[0]+'_ore_washer',
+        ['XBX','CYC','ZAZ'],
+        {
+            'B':'gtceu:fusion_glass',
+            'Y':'gtceu:'+f[0]+'_electric_motor',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'Z':'gtceu:'+f[4]+'_single_cable',
+            'C':'#gtceu:circuits/'+f[0],
+            'X':'gtceu:echorite_rotor'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_ore_washer')
+        event.shaped(
+        'gtceu:'+f[0]+'_polarizer',
+        ['CBC','XAX','CBC'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'C':'gtceu:'+f[1]+'_hex_wire',
+            'X':'gtceu:'+f[4]+'_single_cable',
+            'B':'gtceu:yinyang_rod'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_polarizer')
+        event.shaped(
+        'gtceu:'+f[0]+'_laser_engraver',
+        ['CZC','BAB','XBX'],
+        {
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'X':'gtceu:'+f[4]+'_single_cable',
+            'Z':'gtceu:'+f[0]+'_emitter',
+            'B':'#gtceu:circuits/'+f[0],
+            'C':'gtceu:'+f[0]+'_electric_piston'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_laser_engraver')
+        event.shaped(
+        'gtceu:'+f[0]+'_rock_crusher',
+        ['XBY','CAC','ZZZ'],
+        {
+            'B':'gtceu:'+f[0]+'_electric_motor',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'C':'gtceu:'+f[4]+'_single_cable',
+            'Z':'gtceu:fusion_glass',
+            'X':'gtceu:'+f[0]+'_electric_piston',
+            'Y':'gtceu:tungsten_grinding_head'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_rock_crusher')
+        event.shaped(
+        'gtceu:'+f[0]+'_muffler_hatch',
+        ['AB ','CD ','   '],
+        {
+            'B':'gtceu:'+f[0]+'_electric_motor',
+            'A':'gtceu:'+f[0]+'_machine_hull',
+            'C':'gtceu:time_neutronium_normal_fluid_pipe',
+            'D':'gtceu:echorite_rotor'
+        }
+        ).id('gtceu:shaped/'+f[0]+'_muffler_hatch')
+        let nuu = [
+        ['256','1','1','single',300],
+        ['1024','2','2','double',600],
+        ['4096','4','3','quadruple',1200]
+        ]
+        nuu.forEach(i => {
+            event.recipes.gtceu.assembler(f[0]+'_'+i[0]+'a_laser_target_hatch')
+                .itemInputs('gtceu:'+f[0]+'_machine_hull',i[1]+'x gtceu:diamond_lens',i[1]+'x gtceu:'+f[0]+'_emitter',i[1]+'x gtceu:'+f[0]+'_electric_pump','4x gtceu:'+f[4]+'_'+i[3]+'_cable')
+                .itemOutputs('gtceu:'+f[0]+'_'+i[0]+'a_laser_target_hatch')
+                .duration(i[4])
+                .EUt(f[5])
+                .circuit(i[2])
+            event.recipes.gtceu.assembler(f[0]+'_'+i[0]+'a_laser_source_hatch')
+                .itemInputs('gtceu:'+f[0]+'_machine_hull',i[1]+'x gtceu:diamond_lens',i[1]+'x gtceu:'+f[0]+'_sensor',i[1]+'x gtceu:'+f[0]+'_electric_pump','4x gtceu:'+f[4]+'_'+i[3]+'_cable')
+                .itemOutputs('gtceu:'+f[0]+'_'+i[0]+'a_laser_source_hatch')
+                .duration(i[4])
+                .EUt(f[5])
+                .circuit(i[2])
+        })
+        event.recipes.gtceu.assembly_line(f[0]+'_electric_motor')
+            .itemInputs('1x gtceu:long_yinyang_rod','4x gtceu:long_yinyang_star_alloy_rod','4x gtceu:echorite_ring','8x gtceu:tritanium_round','64x gtceu:fine_'+f[1]+'_wire','64x gtceu:fine_'+f[1]+'_wire','2x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",576*f[7]),Fluid.of("gtceu:lubricant",1000*f[7]),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_electric_motor')
+            .duration(600)
+            .EUt(f[5])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_electric_motor')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_electric_pump')
+            .itemInputs('1x gtceu:'+f[0]+'_electric_motor','1x gtceu:time_neutronium_huge_fluid_pipe','2x gtceu:shulkium_plate','8x gtceu:soularium_screw','16x gtceu:silicone_rubber_ring','1x gtceu:echorite_rotor','2x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",576*f[7]),Fluid.of("gtceu:lubricant",1000*f[7]),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_electric_pump')
+            .duration(600)
+            .EUt(f[5])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_electric_pump')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_fluid_regulator')
+            .itemInputs('1x gtceu:'+f[0]+'_electric_pump','2x #gtceu:circuits/'+f[0])
+            .itemOutputs('1x gtceu:'+f[0]+'_fluid_regulator')
+            .duration(50)
+            .EUt(f[5])
+            .circuit(1)
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_fluid_regulator')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_conveyor_module')
+            .itemInputs('2x gtceu:'+f[0]+'_electric_motor','2x gtceu:shulkium_plate','4x gtceu:echorite_ring','16x gtceu:tritanium_round','4x gtceu:soularium_screw','2x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",576*f[7]),Fluid.of("gtceu:lubricant",1000*f[7]),Fluid.of("gtceu:styrene_butadiene_rubber",3000),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_conveyor_module')
+            .duration(600)
+            .EUt(f[5])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_conveyor_module')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_electric_piston')
+            .itemInputs('1x gtceu:'+f[0]+'_electric_motor','4x gtceu:shulkium_plate','4x gtceu:echorite_ring','16x gtceu:tritanium_round','4x gtceu:managold_rod','1x gtceu:yinyang_star_alloy_gear','2x gtceu:small_naquadah_alloy_gear','2x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",576*f[7]),Fluid.of("gtceu:lubricant",1000*f[7]),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_electric_piston')
+            .duration(600)
+            .EUt(f[5])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_electric_piston')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_robot_arm')
+            .itemInputs('4x gtceu:long_yinyang_rod','1x gtceu:yinyang_star_alloy_gear','3x gtceu:small_naquadah_alloy_gear','2x gtceu:'+f[0]+'_electric_motor','1x gtceu:'+f[0]+'_electric_piston','1x #gtceu:circuits/'+f[0],'2x #gtceu:circuits/'+f[6],'4x #gtceu:circuits/'+f[9],'4x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",576*f[7]),Fluid.of("gtceu:lubricant",1000*f[7]),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_robot_arm')
+            .duration(600)
+            .EUt(100000*f[10])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_robot_arm')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_field_generator')
+            .itemInputs('1x gtceu:yinyang_frame','6x gtceu:shulkium_plate','1x kubejs:void_essence','2x gtceu:'+f[0]+'_emitter','2x #gtceu:circuits/'+f[0],'64x gtceu:fine_'+f[1]+'_wire','64x gtceu:fine_'+f[1]+'_wire','4x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",1000),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_field_generator')
+            .duration(600)
+            .EUt(100000*f[10])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_field_generator')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_emitter')
+            .itemInputs('1x gtceu:yinyang_frame','1x gtceu:'+f[0]+'_electric_motor','4x gtceu:long_yinyang_rod','1x kubejs:void_essence','2x #gtceu:circuits/'+f[0],'64x gtceu:refined_radiance_foil','64x gtceu:shadow_steel_foil','4x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",1000),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_emitter')
+            .duration(600)
+            .EUt(100000*f[10])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_emitter')).EUt(f[8]).CWUt(32))
+        event.recipes.gtceu.assembly_line(f[0]+'_sensor')
+            .itemInputs('1x gtceu:yinyang_frame','1x gtceu:'+f[0]+'_electric_motor','4x gtceu:yinyang_plate','1x kubejs:void_essence','2x #gtceu:circuits/'+f[0],'64x gtceu:refined_radiance_foil','64x gtceu:shadow_steel_foil','4x gtceu:'+f[4]+'_single_cable')
+            .inputFluids(Fluid.of("gtceu:soldering_alloy",1000),Fluid.of("gtceu:naquadria",576))
+            .itemOutputs('1x gtceu:'+f[0]+'_sensor')
+            .duration(600)
+            .EUt(100000*f[10])
+            .stationResearch(b => b.researchStack(Item.of('gtceu:'+f[6]+'_sensor')).EUt(f[8]).CWUt(32))
+    })
+    let vqv = [
+    ['uev','space_neutronium','netherium','ultra'],
+    ['uiv','time_neutronium','shulkium','ultra'],
+    ['uxv','time_space','sculkium','ultimate'],
+    ['opv','Timespace','end_steel','ultimate']
+    ]
+    vqv.forEach(g => {
+        event.shaped(
+        'gtceu:'+g[0]+'_arc_furnace',
+        ['YBY','XAX','ZZZ'],
+        {
+            'Y':'gtceu:'+g[2]+'_quadruple_cable',
+            'Z':'gtceu:'+g[1]+'_plate',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'B':'gtceu:graphite_dust',
+            'X':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_arc_furnace')
+        event.shaped(
+        'gtceu:'+g[0]+'_assembler',
+        ['YBY','XAX','ZBZ'],
+        {
+            'Y':'gtceu:'+g[0]+'_robot_arm',
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'X':'gtceu:'+g[0]+'_conveyor_module',
+            'B':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_assembler')
+        event.shaped(
+        'gtceu:'+g[0]+'_autoclave',
+        ['YBY','YAY','ZXZ'],
+        {
+            'Y':'gtceu:'+g[1]+'_plate',
+            'B':'#forge:glass',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'X':'gtceu:'+g[0]+'_electric_pump',
+            'Z':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_autoclave')
+        event.shaped(
+        'gtceu:'+g[0]+'_bender',
+        ['YBY','CAC','ZXZ'],
+        {
+            'Y':'gtceu:'+g[0]+'_electric_piston',
+            'B':'#forge:tools/wrenches',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'Z':'gtceu:'+g[0]+'_electric_motor',
+            'C':'#gtceu:circuits/'+g[0],
+            'X':'gtceu:'+g[2]+'_single_cable'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_bender')
+        event.shaped(
+        'gtceu:'+g[0]+'_brewery',
+        ['YBY','CAC','ZXZ'],
+        {
+            'B':'gtceu:'+g[0]+'_electric_pump',
+            'Y':'#forge:glass',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'C':'gtceu:'+g[2]+'_single_cable',
+            'Z':'#gtceu:circuits/'+g[0],
+            'X':'gtceu:echorite_spring'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_brewery')
+        event.shaped(
+        'gtceu:'+g[0]+'_brewery',
+        ['YBY','CAC','ZXZ'],
+        {
+            'B':'gtceu:'+g[0]+'_electric_pump',
+            'Y':'#forge:glass',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'C':'gtceu:'+g[2]+'_single_cable',
+            'Z':'#gtceu:circuits/'+g[0],
+            'X':'gtceu:managold_spring'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_brewery_magic')
+        event.shaped(
+        'gtceu:'+g[0]+'_canner',
+        ['YBY','CAC','ZZZ'],
+        {
+            'B':'gtceu:'+g[0]+'_electric_pump',
+            'Z':'#forge:glass',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'Y':'gtceu:'+g[2]+'_single_cable',
+            'C':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_canner')
+        event.shaped(
+        'gtceu:'+g[0]+'_centrifuge',
+        ['ZBZ','CAC','ZBZ'],
+        {
+            'B':'gtceu:'+g[0]+'_electric_motor',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'C':'gtceu:'+g[2]+'_single_cable',
+            'Z':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_centrifuge')
+        event.shaped(
+        'gtceu:'+g[0]+'_chemical_bath',
+        ['YBX','CBY','ZAZ'],
+        {
+            'Y':'gtceu:'+g[0]+'_conveyor_module',
+            'C':'gtceu:'+g[0]+'_electric_pump',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'X':'gtceu:'+g[2]+'_single_cable',
+            'Z':'#gtceu:circuits/'+g[0],
+            'B':'#forge:glass'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_chemical_bath')
+        event.shaped(
+        'gtceu:'+g[0]+'_compressor',
+        [' B ','XAX','ZBZ'],
+        {
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'X':'gtceu:'+g[0]+'_electric_piston',
+            'B':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_compressor')
+        event.shaped(
+        'gtceu:'+g[0]+'_cutter',
+        ['ZBD','XAY','BZC'],
+        {
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'X':'gtceu:'+g[0]+'_conveyor_module',
+            'B':'#gtceu:circuits/'+g[0],
+            'Y':'gtceu:duranium_buzz_saw_blade',
+            'C':'gtceu:'+g[0]+'_electric_motor',
+            'D':'#forge:glass'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_cutter')
+        event.shaped(
+        'gtceu:'+g[0]+'_distillery',
+        ['YXY','BAB','ZCZ'],
+        {
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'C':'gtceu:'+g[0]+'_electric_pump',
+            'B':'#gtceu:circuits/'+g[0],
+            'X':'gtceu:echorite_spring',
+            'Y':'#forge:glass'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_distllery')
+        event.shaped(
+        'gtceu:'+g[0]+'_distillery',
+        ['YXY','BAB','ZCZ'],
+        {
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'C':'gtceu:'+g[0]+'_electric_pump',
+            'B':'#gtceu:circuits/'+g[0],
+            'X':'gtceu:managold_spring',
+            'Y':'#forge:glass'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_distllery_magic')
+        event.shaped(
+        'gtceu:'+g[0]+'_forge_hammer',
+        ['ZBZ','CAC','ZYZ'],
+        {
+            'B':'gtceu:'+g[0]+'_electric_piston',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'C':'#gtceu:circuits/'+g[0],
+            'Y':'minecraft:anvil'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_forge_hammer')
+        event.shaped(
+        'gtceu:'+g[0]+'_forming_press',
+        ['ZBZ','CAC','ZBZ'],
+        {
+            'B':'gtceu:'+g[0]+'_electric_piston',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'C':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_forming_press')
+        event.shaped(
+        'gtceu:'+g[0]+'_lathe',
+        ['ZBZ','CAX','BZY'],
+        {
+            'Y':'gtceu:'+g[0]+'_electric_piston',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'B':'#gtceu:circuits/'+g[0],
+            'C':'gtceu:'+g[0]+'_electric_motor',
+            'X':'gtceu:tungsten_grinding_head'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_lathe')
+        event.shaped(
+        'gtceu:'+g[0]+'_scanner',
+        ['ZBZ','CAC','ZDZ'],
+        {
+            'B':'gtceu:'+g[0]+'_emitter',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'C':'gtceu:'+g[2]+'_single_cable',
+            'Z':'#gtceu:circuits/'+g[0],
+            'D':'gtceu:'+g[0]+'_sensor'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_scanner')
+        event.shaped(
+        'gtceu:'+g[0]+'_packer',
+        ['ZBZ','CAD','XBX'],
+        {
+            'C':'gtceu:'+g[0]+'_robot_arm',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'X':'gtceu:'+g[2]+'_single_cable',
+            'B':'#gtceu:circuits/'+g[0],
+            'D':'gtceu:'+g[0]+'_conveyor_module',
+            'Z':'#forge:chests/wooden'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_packer')
+        event.shaped(
+        'gtceu:'+g[0]+'_sifter',
+        ['ZBZ','CAC','XBX'],
+        {
+            'C':'gtceu:'+g[0]+'_electric_piston',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'Z':'gtceu:'+g[2]+'_single_cable',
+            'X':'#gtceu:circuits/'+g[0],
+            'B':'gtceu:item_filter'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_sifter')
+        event.shaped(
+        'gtceu:'+g[0]+'_wiremill',
+        ['ZBZ','CAC','ZBZ'],
+        {
+            'Z':'gtceu:'+g[0]+'_electric_motor',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'B':'gtceu:'+g[2]+'_single_cable',
+            'C':'#gtceu:circuits/'+g[0]
+        }
+        ).id('gtceu:shaped/'+g[0]+'_wiremill')
+        event.shaped(
+        'gtceu:'+g[0]+'_macerator',
+        ['XBY','CCA','ZZC'],
+        {
+            'B':'gtceu:'+g[0]+'_electric_motor',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'C':'gtceu:'+g[2]+'_single_cable',
+            'Z':'#gtceu:circuits/'+g[0],
+            'X':'gtceu:'+g[0]+'_electric_piston',
+            'Y':'gtceu:tungsten_grinding_head'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_macerator')
+        event.shaped(
+        'gtceu:'+g[0]+'_diode',
+        ['XBX','BAB','ZBZ'],
+        {
+            'B':'kubejs:'+g[3]+'_smd_diode',
+            'A':'gtceu:'+g[0]+'_machine_hull',
+            'X':'gtceu:'+g[2]+'_quadruple_cable',
+            'Z':'gtceu:'+g[1]+'_plate'
+        }
+        ).id('gtceu:shaped/'+g[0]+'_diode')
+    })
+    event.shaped(
+    'gtceu:uhv_scanner',
+    ['ZBZ','CAC','ZDZ'],
+    {
+        'B':'gtceu:uhv_emitter',
+        'A':'gtceu:uhv_machine_hull',
+        'C':'gtceu:europium_single_cable',
+        'Z':'#gtceu:circuits/uhv',
+        'D':'gtceu:uhv_sensor'
+    }
+    ).id('gtceu:shaped/uhv_scanners')
+    let vvt = [
+    ['lv','steel','steel','#forge:glass'],
+    ['mv','steel','steel','#forge:glass'],
+    ['ev','steel','steel','gtceu:tempered_glass'],
+    ['iv','steel','steel','gtceu:laminated_glass'],
+    ['luv','osmiridium','tungsten','gtceu:laminated_glass'],
+    ['zpm','osmiridium','tungsten','gtceu:fusion_glass'],
+    ['uv','osmiridium','tungsten','gtceu:fusion_glass'],
+    ['uhv','osmiridium','tungsten','gtceu:fusion_glass'],
+    ['uev','naquadah_alloy','time_neutronium','gtceu:fusion_glass'],
+    ['uiv','naquadah_alloy','time_neutronium','gtceu:fusion_glass'],
+    ['uxv','naquadah_alloy','time_neutronium','gtceu:fusion_glass'],
+    ['opv','naquadah_alloy','time_neutronium','gtceu:fusion_glass']
+    ]
+    vvt.forEach(h => {
+        event.shaped(
+        'gtceu:'+h[0]+'_item_passthrough_hatch',
+        [' B ','CAC',' D '],
+        {
+            'B':'gtceu:'+h[0]+'_conveyor_module',
+            'A':'gtceu:'+h[0]+'_machine_hull',
+            'C':'gtceu:small_'+h[1]+'_gear',
+            'D':'#forge:chests/wooden'
+        }
+        ).id('gtceu:shaped/'+h[0]+'_item_passthrough_hatch')
+        event.shaped(
+        'gtceu:'+h[0]+'_fluid_passthrough_hatch',
+        [' B ','CAC',' D '],
+        {
+            'B':'gtceu:'+h[0]+'_electric_pump',
+            'A':'gtceu:'+h[0]+'_machine_hull',
+            'C':'gtceu:'+h[2]+'_small_fluid_pipe',
+            'D':h[3]
+        }
+        ).id('gtceu:shaped/'+h[0]+'_fluid_passthrough_hatch')
+    })
+})
+//  adds in greenhouse.js, need the mod "AgriCraft"
+ServerEvents.recipes(event => {
+    let voltage = [3, 15, 60, 240, 960, 3840, 15360, 61440, 245760, 983040, 3932160, 15728640, 62914560, 251658240, 1006632960]
+
+    function Greenhouse(id, input, soil, fluid, output, tier, size, boosted) {
+        if (boosted) {
+            event.recipes.gtceu.greenhouse(id)
+                .circuit(2)
+                .notConsumable(InputItem.of(input))
+                .notConsumable(InputItem.of(soil))
+                .itemInputs('4x gtceu:fertilizer')
+                .inputFluids(Fluid.of('minecraft:water', fluid))
+                .itemOutputs(output)
+                .duration(480*size/tier)
+                .EUt(voltage[tier])
+        } else {
+            event.recipes.gtceu.greenhouse(id)
+                .circuit(1)
+                .notConsumable(InputItem.of(input))
+                .notConsumable(InputItem.of(soil))
+                .inputFluids(Fluid.of('minecraft:water', fluid))
+                .itemOutputs(output)
+                .duration(960*size/tier)
+                .EUt(voltage[tier])
+        }
+    }
+//seeddelight
+    let seeds = [
+    ['kubejs:amathyllis','6x agricraft:amathyllis_petal','amathyllis','minecraft:amethyst_block'],
+    ['kubejs:aurigold','6x minecraft:gold_nugget','aurigold','minecraft:gold_block'],
+    ['kubejs:carbonation','6x agricraft:coal_pebble','carbonation','minecraft:coal_block'],
+    ['kubejs:cuprosia',['2x agricraft:copper_nugget','2x gtceu:copper_nugget','2x create:copper_nugget'],'cuprosia','minecraft:copper_block'],
+    ['kubejs:diamahlia','6x agricraft:diamond_shard','diamahlia','minecraft:diamond_block'],
+    ['kubejs:emeryllis','6x agricraft:emerald_shard','emeryllis','minecraft:emerald_block'],
+    ['kubejs:ferranium','6x minecraft:iron_nugget','ferranium','minecraft:iron_block'],
+    ['kubejs:jaslumine','6x gtceu:aluminium_nugget','jaslumine','gtceu:aluminium_block'],
+    ['kubejs:lapender','6x minecraft:lapis_lazuli','lapender','minecraft:lapis_block'],
+    ['kubejs:nethereed','6x agricraft:netherite_sliver','nethereed','minecraft:ancient_debris'],
+    ['kubejs:niccissus','6x gtceu:nickel_nugget','niccissus','gtceu:nickel_block'],
+    ['kubejs:nitor_wart','6x minecraft:glowstone_dust','nitor_wart','minecraft:glowstone'],
+    ['kubejs:osmonium','6x gtceu:osmium_nugget','osmonium','gtceu:osmium_block'],
+    ['kubejs:petinia','6x gtceu:tin_nugget','petinia','gtceu:tin_block'],
+    ['kubejs:platiolus','6x gtceu:platinum_nugget','platiolus','gtceu:platinum_block'],
+    ['kubejs:plombean','6x gtceu:lead_nugget','plombean','gtceu:lead_block'],
+    ['kubejs:quartzanthemum','6x agricraft:quartz_shard','quartzanthemum','minecraft:quartz_block'],
+    ['kubejs:redstodendron','6x minecraft:redstone','redstodendron','minecraft:redstone_block'],
+    ['kubejs:unknown','6x gtceu:infinity_nugget','unknown','gtceu:infinity_block']
+    ]
+    seeds.forEach(c => {
+        Greenhouse(c[2], c[0], c[3], 1000, c[1], 4, 1.5, false)
+        event.recipes.gtceu.greenhouse(c[2]+'0')
+                .circuit(0)
+                .itemInputs([c[3],'#forge:seeds'])
+                .inputFluids(Fluid.of('minecraft:lava', 1000))
+                .itemOutputs(c[0])
+                .duration(960)
+                .EUt(960)
+    })
+})
